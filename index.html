@@ -21,28 +21,28 @@
 <body class="bg-slate-900 text-white min-h-screen flex flex-col select-none overflow-hidden">
 
     <!-- En-tête -->
-    <header class="bg-slate-800 border-b border-slate-700 px-6 py-4 flex justify-between items-center shadow-lg z-20">
-        <div class="flex items-center space-x-3">
-            <div class="bg-amber-500 p-2 rounded-xl text-slate-900 text-2xl shadow">
+    <header class="bg-slate-800 border-b border-slate-700 px-4 py-3 flex flex-wrap justify-between items-center gap-2 shadow-lg z-20">
+        <div class="flex items-center space-x-2 sm:space-x-3">
+            <div class="bg-amber-500 p-2 rounded-xl text-slate-900 text-xl sm:text-2xl shadow">
                 <i class="fa-solid fa-wand-magic-sparkles"></i>
             </div>
             <div>
-                <h1 class="text-xl font-bold tracking-wide">La Lampe Magique</h1>
-                <p class="text-xs text-slate-400">Jeu d'écoute, de lecture et de recherche (Optimisé TBI)</p>
+                <h1 class="text-base sm:text-xl font-bold tracking-wide">La Lampe Magique</h1>
+                <p class="text-[10px] sm:text-xs text-slate-400">Jeu d'écoute, de lecture et de recherche</p>
             </div>
         </div>
-        <div class="flex items-center space-x-3">
+        <div class="flex items-center space-x-2">
             <!-- Bouton Plein Écran -->
-            <button onclick="toggleFullScreen()" class="bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded-xl text-sm font-semibold flex items-center space-x-2 transition shadow" title="Plein écran">
+            <button onclick="toggleFullScreen()" class="bg-slate-700 hover:bg-slate-600 p-2.5 sm:px-3 sm:py-2 rounded-xl text-sm font-semibold flex items-center space-x-2 transition shadow" title="Plein écran">
                 <i class="fa-solid fa-expand text-amber-400"></i>
             </button>
-            <button id="btn-settings" class="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-xl text-sm font-semibold flex items-center space-x-2 transition shadow">
+            <button id="btn-settings" class="bg-slate-700 hover:bg-slate-600 px-3 py-2 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center space-x-2 transition shadow">
                 <i class="fa-solid fa-gear text-amber-400"></i>
-                <span>Gérer les cartes</span>
+                <span class="hidden sm:inline">Gérer les cartes</span>
             </button>
-            <button id="btn-return-menu" onclick="returnToWelcome()" class="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-xl text-sm font-semibold hidden items-center space-x-2 transition shadow">
+            <button id="btn-return-menu" onclick="returnToWelcome()" class="bg-slate-700 hover:bg-slate-600 px-3 py-2 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold hidden items-center space-x-2 transition shadow">
                 <i class="fa-solid fa-house text-amber-400"></i>
-                <span>Menu Principal</span>
+                <span class="hidden sm:inline">Menu</span>
             </button>
         </div>
     </header>
@@ -50,18 +50,18 @@
     <!-- Zone principale du Jeu -->
     <main id="game-container" class="relative flex-1 bg-black overflow-hidden">
         <!-- Écran d'accueil du jeu -->
-        <div id="welcome-screen" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/90 z-30 p-6 text-center backdrop-blur-sm">
-            <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700 shadow-2xl max-w-lg w-full">
-                <div class="text-5xl text-amber-400 mb-4 animate-bounce">
+        <div id="welcome-screen" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/90 z-30 p-4 sm:p-6 text-center backdrop-blur-sm overflow-y-auto">
+            <div class="bg-slate-800 p-6 sm:p-8 rounded-3xl border border-slate-700 shadow-2xl max-w-lg w-full my-auto">
+                <div class="text-4xl sm:text-5xl text-amber-400 mb-3 sm:mb-4 animate-bounce">
                     <i class="fa-solid fa-lightbulb"></i>
                 </div>
-                <h2 class="text-2xl font-bold mb-2">Prêt à explorer ?</h2>
-                <p class="text-slate-300 text-sm mb-6">Déplacez la lampe torche magique (ou votre doigt sur le TBI) pour retrouver le bon objet !</p>
+                <h2 class="text-xl sm:text-2xl font-bold mb-2">Prêt à explorer ?</h2>
+                <p class="text-slate-300 text-xs sm:text-sm mb-4 sm:mb-6">Déplacez la lampe torche magique (ou votre doigt sur l'écran) pour retrouver le bon objet !</p>
                 
-                <div class="grid grid-cols-2 gap-4 mb-4 text-left bg-slate-900 p-4 rounded-xl border border-slate-800">
+                <div class="grid grid-cols-2 gap-3 sm:gap-4 mb-4 text-left bg-slate-900 p-3 sm:p-4 rounded-xl border border-slate-800">
                     <div>
-                        <label class="text-xs text-slate-400 block mb-1">Objets cachés :</label>
-                        <select id="setting-objects-count" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-sm">
+                        <label class="text-[11px] sm:text-xs text-slate-400 block mb-1">Objets cachés :</label>
+                        <select id="setting-objects-count" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-xs sm:text-sm">
                             <option value="3">3 objets</option>
                             <option value="5" selected>5 objets</option>
                             <option value="8">8 objets</option>
@@ -69,8 +69,8 @@
                         </select>
                     </div>
                     <div>
-                        <label class="text-xs text-slate-400 block mb-1">Questions :</label>
-                        <select id="setting-questions-count" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-sm">
+                        <label class="text-[11px] sm:text-xs text-slate-400 block mb-1">Questions :</label>
+                        <select id="setting-questions-count" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-xs sm:text-sm">
                             <option value="5">5 questions</option>
                             <option value="10" selected>10 questions</option>
                             <option value="15">15 questions</option>
@@ -80,17 +80,17 @@
                 </div>
 
                 <!-- Option Mode Lecture Seule (Sans Audio) -->
-                <div class="mb-6 text-left">
+                <div class="mb-5 sm:mb-6 text-left">
                     <label class="flex items-center space-x-3 bg-slate-900 p-3 rounded-xl border border-slate-800 cursor-pointer hover:border-slate-700 transition">
                         <input type="checkbox" id="setting-no-audio" class="rounded bg-slate-800 border-slate-700 text-amber-500 focus:ring-0 w-5 h-5">
                         <div>
-                            <span class="text-sm font-bold block text-amber-300">Mode Lecture Seule (Sans Audio)</span>
-                            <span class="text-[11px] text-slate-400">Le mot s'affiche en haut, aucun son n'est lu (idéal pour la lecture).</span>
+                            <span class="text-xs sm:text-sm font-bold block text-amber-300">Mode Lecture Seule (Sans Audio)</span>
+                            <span class="text-[10px] sm:text-[11px] text-slate-400">Le mot s'affiche en haut, aucun son n'est lu.</span>
                         </div>
                     </label>
                 </div>
 
-                <button onclick="startGameSession()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold py-3 rounded-xl shadow-lg transition text-lg flex items-center justify-center space-x-2">
+                <button onclick="startGameSession()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold py-3 rounded-xl shadow-lg transition text-base sm:text-lg flex items-center justify-center space-x-2">
                     <i class="fa-solid fa-play"></i>
                     <span>Commencer la partie</span>
                 </button>
@@ -99,21 +99,21 @@
 
         <!-- Interface de jeu active -->
         <div id="active-play-area" class="absolute inset-0 hidden">
-            <!-- Barre de contrôle du jeu en haut -->
-            <div class="absolute top-4 left-1/2 transform -translate-x-1/2 bg-slate-800/90 border border-slate-700 backdrop-blur px-6 py-3 rounded-2xl flex items-center space-x-6 z-20 shadow-xl pointer-events-auto">
-                <div id="audio-control-wrapper" class="flex items-center space-x-3">
-                    <button id="btn-play-audio" class="bg-amber-500 hover:bg-amber-400 text-slate-900 w-12 h-12 rounded-xl flex items-center justify-center text-xl shadow transition transform hover:scale-105">
+            <!-- Barre de contrôle du jeu en haut (Adaptée mobile) -->
+            <div class="absolute top-3 left-1/2 transform -translate-x-1/2 bg-slate-800/95 border border-slate-700 backdrop-blur px-4 py-2 sm:px-6 sm:py-3 rounded-2xl flex items-center space-x-3 sm:space-x-6 z-20 shadow-xl pointer-events-auto max-w-[95%]">
+                <div id="audio-control-wrapper" class="flex items-center space-x-2 sm:space-x-3">
+                    <button id="btn-play-audio" class="bg-amber-500 hover:bg-amber-400 text-slate-900 w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center text-lg sm:text-xl shadow transition transform hover:scale-105 shrink-0">
                         <i class="fa-solid fa-volume-high"></i>
                     </button>
-                    <div>
-                        <span id="instruction-label" class="text-xs text-slate-400 block">Écoute bien :</span>
-                        <span id="target-word-display" class="font-bold text-lg text-amber-300">...</span>
+                    <div class="min-w-0">
+                        <span id="instruction-label" class="text-[10px] sm:text-xs text-slate-400 block truncate">Écoute bien :</span>
+                        <span id="target-word-display" class="font-bold text-sm sm:text-lg text-amber-300 truncate block">...</span>
                     </div>
                 </div>
-                <div class="h-8 w-px bg-slate-700"></div>
-                <div class="text-sm">
+                <div class="h-6 sm:h-8 w-px bg-slate-700 shrink-0"></div>
+                <div class="text-xs sm:text-sm shrink-0">
                     <span class="text-slate-400">Score :</span> 
-                    <span id="current-score" class="font-bold text-emerald-400 text-base">0</span> / <span id="total-questions-score">10</span>
+                    <span id="current-score" class="font-bold text-emerald-400 text-sm sm:text-base">0</span> / <span id="total-questions-score">10</span>
                 </div>
             </div>
 
@@ -121,25 +121,25 @@
             <div id="objects-layer" class="absolute inset-0"></div>
 
             <!-- Masque de la lampe torche -->
-            <div id="torch-mask" class="absolute inset-0 pointer-events-none transition-opacity duration-300" style="background: radial-gradient(circle 130px at var(--x, 50%) var(--y, 50%), transparent 0%, #000000 100%);"></div>
+            <div id="torch-mask" class="absolute inset-0 pointer-events-none transition-opacity duration-300" style="background: radial-gradient(circle 120px at var(--x, 50%) var(--y, 50%), transparent 0%, #000000 100%);"></div>
             
-            <!-- Curseur visuel lampe torche (TBI & Souris) -->
-            <div id="torch-cursor" class="absolute pointer-events-none w-36 h-36 rounded-full border-2 border-amber-400/80 shadow-[0_0_30px_rgba(251,191,36,0.5)] transform -translate-x-1/2 -translate-y-1/2 z-10 transition-transform duration-75"></div>
+            <!-- Curseur visuel lampe torche -->
+            <div id="torch-cursor" class="absolute pointer-events-none w-32 h-32 sm:w-36 sm:h-36 rounded-full border-2 border-amber-400/80 shadow-[0_0_30px_rgba(251,191,36,0.5)] transform -translate-x-1/2 -translate-y-1/2 z-10 transition-transform duration-75"></div>
         </div>
 
         <!-- Écran de Fin de Partie -->
-        <div id="game-over-screen" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/95 z-30 hidden p-6 text-center">
-            <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700 shadow-2xl max-w-md w-full">
-                <div class="text-6xl text-amber-400 mb-4">
+        <div id="game-over-screen" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/95 z-30 hidden p-4 sm:p-6 text-center">
+            <div class="bg-slate-800 p-6 sm:p-8 rounded-3xl border border-slate-700 shadow-2xl max-w-md w-full">
+                <div class="text-5xl sm:text-6xl text-amber-400 mb-3 sm:mb-4">
                     <i class="fa-solid fa-trophy"></i>
                 </div>
-                <h2 class="text-3xl font-bold mb-2">Partie terminée !</h2>
-                <p id="final-score-text" class="text-slate-300 text-lg mb-6">Tu as obtenu 0 sur 10 bonnes réponses.</p>
+                <h2 class="text-2xl sm:text-3xl font-bold mb-2">Partie terminée !</h2>
+                <p id="final-score-text" class="text-slate-300 text-sm sm:text-lg mb-5 sm:mb-6">Tu as obtenu 0 sur 10 bonnes réponses.</p>
                 <div class="flex space-x-3">
-                    <button onclick="returnToWelcome()" class="flex-1 bg-slate-700 hover:bg-slate-600 font-bold py-3 rounded-xl transition">
+                    <button onclick="returnToWelcome()" class="flex-1 bg-slate-700 hover:bg-slate-600 font-bold py-3 rounded-xl transition text-sm sm:text-base">
                         Accueil
                     </button>
-                    <button onclick="restartGame()" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold py-3 rounded-xl shadow-lg transition">
+                    <button onclick="restartGame()" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold py-3 rounded-xl shadow-lg transition text-sm sm:text-base">
                         Recommencer
                     </button>
                 </div>
@@ -148,65 +148,65 @@
     </main>
 
     <!-- Modale de Gestion des Cartes et Paramètres -->
-    <div id="settings-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+    <div id="settings-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-3 sm:p-4">
         <div class="bg-slate-800 border border-slate-700 rounded-3xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
             <!-- Entête Modale -->
-            <div class="px-6 py-4 border-b border-slate-700 flex justify-between items-center bg-slate-800/50">
-                <h3 class="text-lg font-bold flex items-center space-x-2">
+            <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-700 flex justify-between items-center bg-slate-800/50">
+                <h3 class="text-base sm:text-lg font-bold flex items-center space-x-2 truncate">
                     <i class="fa-solid fa-layer-group text-amber-400"></i>
                     <span>Gestion des Cartes & Banque de Mots</span>
                 </h3>
-                <button id="btn-close-settings" class="text-slate-400 hover:text-white text-xl p-2">
+                <button id="btn-close-settings" class="text-slate-400 hover:text-white text-xl p-2 shrink-0">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
 
             <!-- Corps de la Modale -->
-            <div class="p-6 overflow-y-auto flex-1 space-y-6">
+            <div class="p-4 sm:p-6 overflow-y-auto flex-1 space-y-4 sm:space-y-6">
                 <!-- Barre d'outils Import / Export -->
-                <div class="bg-slate-900/60 p-4 rounded-2xl border border-slate-700/60 flex flex-wrap gap-3 items-center justify-between">
+                <div class="bg-slate-900/60 p-3 sm:p-4 rounded-2xl border border-slate-700/60 flex flex-wrap gap-2 sm:gap-3 items-center justify-between">
                     <div class="flex flex-wrap gap-2">
-                        <button onclick="exportJSON()" class="bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded-xl text-xs font-semibold flex items-center space-x-2 transition">
+                        <button onclick="exportJSON()" class="bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded-xl text-[11px] sm:text-xs font-semibold flex items-center space-x-2 transition">
                             <i class="fa-solid fa-file-arrow-down text-amber-400"></i>
-                            <span>Export JSON</span>
+                            <span>JSON</span>
                         </button>
-                        <button onclick="exportCSV()" class="bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded-xl text-xs font-semibold flex items-center space-x-2 transition">
+                        <button onclick="exportCSV()" class="bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded-xl text-[11px] sm:text-xs font-semibold flex items-center space-x-2 transition">
                             <i class="fa-solid fa-file-csv text-emerald-400"></i>
-                            <span>Export CSV</span>
+                            <span>CSV</span>
                         </button>
-                        <button onclick="exportXLSX()" class="bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded-xl text-xs font-semibold flex items-center space-x-2 transition">
+                        <button onclick="exportXLSX()" class="bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded-xl text-[11px] sm:text-xs font-semibold flex items-center space-x-2 transition">
                             <i class="fa-solid fa-file-excel text-emerald-400"></i>
-                            <span>Export Excel (.xlsx)</span>
+                            <span>Excel</span>
                         </button>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <label class="bg-amber-500 hover:bg-amber-400 text-slate-900 px-3 py-2 rounded-xl text-xs font-bold cursor-pointer flex items-center space-x-2 transition shadow">
+                        <label class="bg-amber-500 hover:bg-amber-400 text-slate-900 px-3 py-2 rounded-xl text-[11px] sm:text-xs font-bold cursor-pointer flex items-center space-x-2 transition shadow">
                             <i class="fa-solid fa-file-arrow-up"></i>
-                            <span>Importer Fichier</span>
+                            <span>Importer</span>
                             <input type="file" id="import-file-input" accept=".json,.csv,.xlsx" class="hidden" onchange="handleFileImport(event)">
                         </label>
                     </div>
                 </div>
 
                 <!-- Formulaire d'ajout / modification de carte -->
-                <div class="bg-slate-900 p-5 rounded-2xl border border-slate-700">
-                    <h4 id="form-title" class="text-sm font-bold text-amber-400 mb-3 flex items-center space-x-2">
+                <div class="bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-700">
+                    <h4 id="form-title" class="text-xs sm:text-sm font-bold text-amber-400 mb-3 flex items-center space-x-2">
                         <i class="fa-solid fa-plus-circle"></i>
                         <span>Ajouter une nouvelle carte</span>
                     </h4>
                     <input type="hidden" id="edit-card-id" value="">
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
                         <div>
-                            <label class="block text-xs text-slate-400 mb-1">Mot / Texte (Optionnel)</label>
-                            <input type="text" id="card-word" placeholder="ex: Sac à dos" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-sm focus:border-amber-400 focus:outline-none">
+                            <label class="block text-[11px] sm:text-xs text-slate-400 mb-1">Mot / Texte (Optionnel)</label>
+                            <input type="text" id="card-word" placeholder="ex: Sac à dos" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-xs sm:text-sm focus:border-amber-400 focus:outline-none">
                             <div class="mt-1 flex items-center space-x-2">
                                 <input type="checkbox" id="card-hide-text" class="rounded bg-slate-800 border-slate-700 text-amber-500 focus:ring-0">
-                                <label for="card-hide-text" class="text-xs text-slate-400">Masquer le texte</label>
+                                <label for="card-hide-text" class="text-[11px] sm:text-xs text-slate-400">Masquer le texte</label>
                             </div>
                         </div>
                         <div>
-                            <label class="block text-xs text-slate-400 mb-1">Langue de prononciation</label>
-                            <select id="card-lang" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-sm focus:border-amber-400 focus:outline-none">
+                            <label class="block text-[11px] sm:text-xs text-slate-400 mb-1">Langue</label>
+                            <select id="card-lang" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-xs sm:text-sm focus:border-amber-400 focus:outline-none">
                                 <option value="fr-FR">Français (fr-FR)</option>
                                 <option value="en-US">Anglais (en-US)</option>
                                 <option value="en-GB">Anglais (UK)</option>
@@ -215,14 +215,14 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-xs text-slate-400 mb-1">Image (URL ou Émoji)</label>
-                            <input type="text" id="card-image" placeholder="https://... ou 🎒" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-sm focus:border-amber-400 focus:outline-none">
+                            <label class="block text-[11px] sm:text-xs text-slate-400 mb-1">Image (URL ou Émoji)</label>
+                            <input type="text" id="card-image" placeholder="https://... ou 🎒" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-xs sm:text-sm focus:border-amber-400 focus:outline-none">
                         </div>
                         <div>
-                            <label class="block text-xs text-slate-400 mb-1">Son Audio (Fichier ou URL)</label>
+                            <label class="block text-[11px] sm:text-xs text-slate-400 mb-1">Son Audio (Fichier ou URL)</label>
                             <div class="flex space-x-2">
-                                <input type="text" id="card-audio" placeholder="Lien ou fichier" class="flex-1 bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-sm focus:border-amber-400 focus:outline-none">
-                                <label class="bg-slate-700 hover:bg-slate-600 px-3 py-2.5 rounded-xl text-xs font-semibold cursor-pointer flex items-center justify-center transition">
+                                <input type="text" id="card-audio" placeholder="Lien ou fichier" class="flex-1 bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-xs sm:text-sm focus:border-amber-400 focus:outline-none">
+                                <label class="bg-slate-700 hover:bg-slate-600 px-3 py-2.5 rounded-xl text-xs font-semibold cursor-pointer flex items-center justify-center transition shrink-0">
                                     <i class="fa-solid fa-upload"></i>
                                     <input type="file" id="audio-file-input" accept="audio/*" class="hidden" onchange="handleAudioFileUpload(event)">
                                 </label>
@@ -231,14 +231,14 @@
                     </div>
                     <div class="mt-4 flex justify-end space-x-3">
                         <button id="btn-cancel-edit" onclick="resetCardForm()" class="bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-xl text-xs font-semibold hidden">Annuler</button>
-                        <button onclick="saveCard()" class="bg-amber-500 hover:bg-amber-400 text-slate-900 px-6 py-2 rounded-xl text-xs font-bold shadow transition">Enregistrer la carte</button>
+                        <button onclick="saveCard()" class="bg-amber-500 hover:bg-amber-400 text-slate-900 px-5 py-2 rounded-xl text-xs font-bold shadow transition">Enregistrer la carte</button>
                     </div>
                 </div>
 
                 <!-- Liste des cartes enregistrées -->
                 <div>
-                    <h4 class="text-sm font-bold text-slate-300 mb-3">Cartes enregistrées (<span id="cards-count">0</span>)</h4>
-                    <div id="cards-list-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-h-64 overflow-y-auto pr-2">
+                    <h4 class="text-xs sm:text-sm font-bold text-slate-300 mb-3">Cartes enregistrées (<span id="cards-count">0</span>)</h4>
+                    <div id="cards-list-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-h-56 overflow-y-auto pr-1">
                         <!-- Rempli dynamiquement -->
                     </div>
                 </div>
@@ -273,7 +273,7 @@
         };
 
         window.addEventListener('DOMContentLoaded', () => {
-            const savedCards = localStorage.getItem('magic_torch_cards_lang_v7');
+            const savedCards = localStorage.getItem('magic_torch_cards_lang_v8');
             if (savedCards) {
                 try { cards = JSON.parse(savedCards); } catch(e) {}
             }
@@ -331,7 +331,7 @@
         function toggleFullScreen() {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(err => {
-                    console.log("Erreur passage plein écran :", err);
+                    console.log("Erreur plein écran :", err);
                 });
             } else {
                 if (document.exitFullscreen) {
@@ -341,7 +341,7 @@
         }
 
         function saveCardsToStorage() {
-            localStorage.setItem('magic_torch_cards_lang_v7', JSON.stringify(cards));
+            localStorage.setItem('magic_torch_cards_lang_v8', JSON.stringify(cards));
             renderCardsList();
         }
 
@@ -364,14 +364,14 @@
                     : `<span class="text-2xl">${card.image || '❓'}</span>`;
 
                 item.innerHTML = `
-                    <div class="flex items-center space-x-3">
-                        <div class="w-12 h-12 bg-slate-900 rounded-xl flex items-center justify-center border border-slate-700">${imgContent}</div>
-                        <div>
-                            <p class="font-bold text-sm">${card.word || '(Sans texte)'}</p>
-                            <p class="text-[10px] text-slate-400">[${card.lang}] ${card.hideText ? '• Texte masqué' : ''}</p>
+                    <div class="flex items-center space-x-3 truncate">
+                        <div class="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center border border-slate-700 shrink-0">${imgContent}</div>
+                        <div class="truncate">
+                            <p class="font-bold text-xs sm:text-sm truncate">${card.word || '(Sans texte)'}</p>
+                            <p class="text-[10px] text-slate-400">[${card.lang}] ${card.hideText ? '• Masqué' : ''}</p>
                         </div>
                     </div>
-                    <div class="flex space-x-1">
+                    <div class="flex space-x-1 shrink-0">
                         <button onclick="editCard('${card.id}')" class="p-2 text-slate-400 hover:text-amber-400 transition"><i class="fa-solid fa-pen"></i></button>
                         <button onclick="deleteCard('${card.id}')" class="p-2 text-slate-400 hover:text-red-400 transition"><i class="fa-solid fa-trash"></i></button>
                     </div>
@@ -521,7 +521,7 @@
 
             const containerWidth = layer.clientWidth || window.innerWidth;
             const containerHeight = layer.clientHeight || window.innerHeight;
-            const padding = 100;
+            const padding = 80;
             let positions = [];
 
             objects.forEach((obj) => {
@@ -530,13 +530,13 @@
 
                 do {
                     overlapping = false;
-                    posX = padding + Math.random() * (containerWidth - 2 * padding - 120);
-                    posY = padding + Math.random() * (containerHeight - 2 * padding - 120);
+                    posX = padding + Math.random() * (containerWidth - 2 * padding - 100);
+                    posY = padding + Math.random() * (containerHeight - 2 * padding - 100);
 
                     for (let pos of positions) {
                         let dx = pos.x - posX;
                         let dy = pos.y - posY;
-                        if (Math.sqrt(dx * dx + dy * dy) < 140) {
+                        if (Math.sqrt(dx * dx + dy * dy) < 120) {
                             overlapping = true;
                             break;
                         }
@@ -552,10 +552,10 @@
                 el.style.top = `${posY}px`;
 
                 let imgContent = obj.image && (obj.image.startsWith('http') || obj.image.startsWith('data:'))
-                    ? `<img src="${obj.image}" class="w-20 h-20 object-cover rounded-2xl shadow-lg border-2 border-slate-700 pointer-events-none">`
-                    : `<div class="text-6xl flex items-center justify-center w-20 h-20 bg-slate-800/80 rounded-2xl shadow-lg border border-slate-700 pointer-events-none">${obj.image || '❓'}</div>`;
+                    ? `<img src="${obj.image}" class="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-2xl shadow-lg border-2 border-slate-700 pointer-events-none">`
+                    : `<div class="text-5xl sm:text-6xl flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-slate-800/80 rounded-2xl shadow-lg border border-slate-700 pointer-events-none">${obj.image || '❓'}</div>`;
 
-                let textHtml = (!obj.hideText && obj.word) ? `<span class="mt-2 bg-slate-900/90 border border-slate-700 px-3 py-1 rounded-full text-xs font-bold text-amber-300 shadow pointer-events-none">${obj.word}</span>` : '';
+                let textHtml = (!obj.hideText && obj.word) ? `<span class="mt-1 sm:mt-2 bg-slate-900/90 border border-slate-700 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[11px] sm:text-xs font-bold text-amber-300 shadow pointer-events-none">${obj.word}</span>` : '';
 
                 el.innerHTML = `${imgContent}${textHtml}`;
 
