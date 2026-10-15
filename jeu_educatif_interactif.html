@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeu Éducatif - Lampe Torche Magique</title>
+    <title>La Lampe Magique - Jeu Éducatif</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome -->
@@ -27,7 +27,7 @@
             </div>
             <div>
                 <h1 class="text-xl font-bold tracking-wide">La Lampe Magique</h1>
-                <p class="text-xs text-slate-400">Jeu d'écoute et de recherche visuelle (Optimisé TBI)</p>
+                <p class="text-xs text-slate-400">Jeu d'écoute, de lecture et de recherche (Optimisé TBI)</p>
             </div>
         </div>
         <div class="flex items-center space-x-3">
@@ -35,9 +35,9 @@
                 <i class="fa-solid fa-gear text-amber-400"></i>
                 <span>Gérer les cartes</span>
             </button>
-            <button onclick="startGameSession()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-900 px-6 py-2 rounded-xl font-bold shadow-lg transition flex items-center space-x-2">
-                <i class="fa-solid fa-play"></i>
-                <span>Jouer</span>
+            <button id="btn-return-menu" onclick="returnToWelcome()" class="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-xl text-sm font-semibold hidden items-center space-x-2 transition shadow">
+                <i class="fa-solid fa-house text-amber-400"></i>
+                <span>Menu Principal</span>
             </button>
         </div>
     </header>
@@ -51,11 +51,11 @@
                     <i class="fa-solid fa-lightbulb"></i>
                 </div>
                 <h2 class="text-2xl font-bold mb-2">Prêt à explorer ?</h2>
-                <p class="text-slate-300 text-sm mb-6">Écoutez le mot, déplacez la lampe torche magique (ou votre doigt sur le TBI) pour retrouver le bon objet !</p>
+                <p class="text-slate-300 text-sm mb-6">Déplacez la lampe torche magique (ou votre doigt sur le TBI) pour retrouver le bon objet !</p>
                 
-                <div class="grid grid-cols-2 gap-4 mb-6 text-left bg-slate-900 p-4 rounded-xl border border-slate-800">
+                <div class="grid grid-cols-2 gap-4 mb-4 text-left bg-slate-900 p-4 rounded-xl border border-slate-800">
                     <div>
-                        <label class="text-xs text-slate-400 block mb-1">Objets cachés par manche :</label>
+                        <label class="text-xs text-slate-400 block mb-1">Objets cachés :</label>
                         <select id="setting-objects-count" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-sm">
                             <option value="3">3 objets</option>
                             <option value="5" selected>5 objets</option>
@@ -64,7 +64,7 @@
                         </select>
                     </div>
                     <div>
-                        <label class="text-xs text-slate-400 block mb-1">Nombre de questions :</label>
+                        <label class="text-xs text-slate-400 block mb-1">Questions :</label>
                         <select id="setting-questions-count" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-sm">
                             <option value="5">5 questions</option>
                             <option value="10" selected>10 questions</option>
@@ -72,6 +72,17 @@
                             <option value="20">20 questions</option>
                         </select>
                     </div>
+                </div>
+
+                <!-- Option Mode Lecture Seule (Sans Audio) -->
+                <div class="mb-6 text-left">
+                    <label class="flex items-center space-x-3 bg-slate-900 p-3 rounded-xl border border-slate-800 cursor-pointer hover:border-slate-700 transition">
+                        <input type="checkbox" id="setting-no-audio" class="rounded bg-slate-800 border-slate-700 text-amber-500 focus:ring-0 w-5 h-5">
+                        <div>
+                            <span class="text-sm font-bold block text-amber-300">Mode Lecture Seule (Sans Audio)</span>
+                            <span class="text-[11px] text-slate-400">Le mot s'affiche en haut, aucun son n'est lu (idéal pour la lecture).</span>
+                        </div>
+                    </label>
                 </div>
 
                 <button onclick="startGameSession()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold py-3 rounded-xl shadow-lg transition text-lg flex items-center justify-center space-x-2">
@@ -85,12 +96,12 @@
         <div id="active-play-area" class="absolute inset-0 hidden">
             <!-- Barre de contrôle du jeu en haut -->
             <div class="absolute top-4 left-1/2 transform -translate-x-1/2 bg-slate-800/90 border border-slate-700 backdrop-blur px-6 py-3 rounded-2xl flex items-center space-x-6 z-20 shadow-xl pointer-events-auto">
-                <div class="flex items-center space-x-3">
+                <div id="audio-control-wrapper" class="flex items-center space-x-3">
                     <button id="btn-play-audio" class="bg-amber-500 hover:bg-amber-400 text-slate-900 w-12 h-12 rounded-xl flex items-center justify-center text-xl shadow transition transform hover:scale-105">
                         <i class="fa-solid fa-volume-high"></i>
                     </button>
                     <div>
-                        <span class="text-xs text-slate-400 block">Écoute bien :</span>
+                        <span id="instruction-label" class="text-xs text-slate-400 block">Écoute bien :</span>
                         <span id="target-word-display" class="font-bold text-lg text-amber-300">...</span>
                     </div>
                 </div>
@@ -104,10 +115,10 @@
             <!-- Conteneur des objets interactifs -->
             <div id="objects-layer" class="absolute inset-0"></div>
 
-            <!-- Masque de la lampe torche (Sombre 100% noir hors faisceau) -->
+            <!-- Masque de la lampe torche -->
             <div id="torch-mask" class="absolute inset-0 pointer-events-none transition-opacity duration-300" style="background: radial-gradient(circle 130px at var(--x, 50%) var(--y, 50%), transparent 0%, #000000 100%);"></div>
             
-            <!-- Curseur visuel lampe torche (Indicateur TBI & Souris) -->
+            <!-- Curseur visuel lampe torche (TBI & Souris) -->
             <div id="torch-cursor" class="absolute pointer-events-none w-36 h-36 rounded-full border-2 border-amber-400/80 shadow-[0_0_30px_rgba(251,191,36,0.5)] transform -translate-x-1/2 -translate-y-1/2 z-10 transition-transform duration-75"></div>
         </div>
 
@@ -243,7 +254,8 @@
 
         let gameSettings = {
             objectsCount: 5,
-            questionsCount: 10
+            questionsCount: 10,
+            noAudio: false
         };
 
         let currentGameState = {
@@ -256,7 +268,7 @@
         };
 
         window.addEventListener('DOMContentLoaded', () => {
-            const savedCards = localStorage.getItem('magic_torch_cards_lang_v4');
+            const savedCards = localStorage.getItem('magic_torch_cards_lang_v6');
             if (savedCards) {
                 try { cards = JSON.parse(savedCards); } catch(e) {}
             }
@@ -309,7 +321,7 @@
         });
 
         function saveCardsToStorage() {
-            localStorage.setItem('magic_torch_cards_lang_v4', JSON.stringify(cards));
+            localStorage.setItem('magic_torch_cards_lang_v6', JSON.stringify(cards));
             renderCardsList();
         }
 
@@ -428,11 +440,24 @@
 
             gameSettings.objectsCount = parseInt(document.getElementById('setting-objects-count').value);
             gameSettings.questionsCount = parseInt(document.getElementById('setting-questions-count').value);
+            gameSettings.noAudio = document.getElementById('setting-no-audio').checked;
 
             document.getElementById('settings-modal').classList.add('hidden');
             document.getElementById('welcome-screen').classList.add('hidden');
             document.getElementById('game-over-screen').classList.add('hidden');
             document.getElementById('active-play-area').classList.remove('hidden');
+            document.getElementById('btn-return-menu').classList.remove('hidden');
+            document.getElementById('btn-return-menu').classList.add('flex');
+
+            const audioWrapper = document.getElementById('audio-control-wrapper');
+            const instructionLabel = document.getElementById('instruction-label');
+            if (gameSettings.noAudio) {
+                audioWrapper.querySelector('button').style.display = 'none';
+                instructionLabel.textContent = "Lis le mot :";
+            } else {
+                audioWrapper.querySelector('button').style.display = 'flex';
+                instructionLabel.textContent = "Écoute bien :";
+            }
 
             currentGameState.isPlaying = true;
             currentGameState.score = 0;
@@ -454,7 +479,7 @@
 
             currentGameState.currentTarget = currentGameState.activeQuestions[currentGameState.questionIndex];
             document.getElementById('current-score').textContent = currentGameState.score;
-            document.getElementById('target-word-display').textContent = currentGameState.currentTarget.word || '(Écoute le son)';
+            document.getElementById('target-word-display').textContent = currentGameState.currentTarget.word || '(Mot mystère)';
 
             let distractors = cards.filter(c => c.id !== currentGameState.currentTarget.id);
             distractors.sort(() => 0.5 - Math.random());
@@ -462,7 +487,10 @@
             roundObjects.sort(() => 0.5 - Math.random());
 
             renderObjectsOnBoard(roundObjects, currentGameState.currentTarget);
-            playTargetAudio();
+            
+            if (!gameSettings.noAudio) {
+                playTargetAudio();
+            }
             currentGameState.lockClick = false;
         }
 
@@ -545,6 +573,7 @@
         }
 
         function playTargetAudio() {
+            if (gameSettings.noAudio) return;
             if (!currentGameState.currentTarget) return;
             const target = currentGameState.currentTarget;
 
@@ -565,12 +594,17 @@
         function endGame() {
             currentGameState.isPlaying = false;
             document.getElementById('active-play-area').classList.add('hidden');
+            document.getElementById('btn-return-menu').classList.add('hidden');
             document.getElementById('game-over-screen').classList.remove('hidden');
             document.getElementById('final-score-text').textContent = `Tu as obtenu ${currentGameState.score} sur ${currentGameState.activeQuestions.length} bonnes réponses !`;
         }
 
         function returnToWelcome() {
+            currentGameState.isPlaying = false;
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            document.getElementById('active-play-area').classList.add('hidden');
             document.getElementById('game-over-screen').classList.add('hidden');
+            document.getElementById('btn-return-menu').classList.add('hidden');
             document.getElementById('welcome-screen').classList.remove('hidden');
         }
 
