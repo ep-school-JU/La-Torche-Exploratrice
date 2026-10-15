@@ -14,7 +14,8 @@
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap');
-        body { font-family: 'Fredoka', sans-serif; touch-action: none; }
+        body { font-family: 'Fredoka', sans-serif; }
+        .in-game-cursor { touch-action: none; cursor: none; }
     </style>
 </head>
 <body class="bg-slate-900 text-white min-h-screen flex flex-col select-none overflow-hidden">
@@ -31,6 +32,10 @@
             </div>
         </div>
         <div class="flex items-center space-x-3">
+            <!-- Bouton Plein Écran -->
+            <button onclick="toggleFullScreen()" class="bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded-xl text-sm font-semibold flex items-center space-x-2 transition shadow" title="Plein écran">
+                <i class="fa-solid fa-expand text-amber-400"></i>
+            </button>
             <button id="btn-settings" class="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-xl text-sm font-semibold flex items-center space-x-2 transition shadow">
                 <i class="fa-solid fa-gear text-amber-400"></i>
                 <span>Gérer les cartes</span>
@@ -43,7 +48,7 @@
     </header>
 
     <!-- Zone principale du Jeu -->
-    <main id="game-container" class="relative flex-1 bg-black overflow-hidden cursor-none">
+    <main id="game-container" class="relative flex-1 bg-black overflow-hidden">
         <!-- Écran d'accueil du jeu -->
         <div id="welcome-screen" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/90 z-30 p-6 text-center backdrop-blur-sm">
             <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700 shadow-2xl max-w-lg w-full">
@@ -268,7 +273,7 @@
         };
 
         window.addEventListener('DOMContentLoaded', () => {
-            const savedCards = localStorage.getItem('magic_torch_cards_lang_v6');
+            const savedCards = localStorage.getItem('magic_torch_cards_lang_v7');
             if (savedCards) {
                 try { cards = JSON.parse(savedCards); } catch(e) {}
             }
@@ -291,10 +296,12 @@
             }
 
             gameContainer.addEventListener('mousemove', (e) => {
+                if (!currentGameState.isPlaying) return;
                 updatePointerPosition(e.clientX, e.clientY);
             });
 
             gameContainer.addEventListener('touchmove', (e) => {
+                if (!currentGameState.isPlaying) return;
                 if (e.touches.length > 0) {
                     const touch = e.touches[0];
                     updatePointerPosition(touch.clientX, touch.clientY);
@@ -302,6 +309,7 @@
             }, { passive: true });
 
             gameContainer.addEventListener('touchstart', (e) => {
+                if (!currentGameState.isPlaying) return;
                 if (e.touches.length > 0) {
                     const touch = e.touches[0];
                     updatePointerPosition(touch.clientX, touch.clientY);
@@ -320,8 +328,20 @@
             document.getElementById('btn-play-audio').addEventListener('click', playTargetAudio);
         });
 
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log("Erreur passage plein écran :", err);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
         function saveCardsToStorage() {
-            localStorage.setItem('magic_torch_cards_lang_v6', JSON.stringify(cards));
+            localStorage.setItem('magic_torch_cards_lang_v7', JSON.stringify(cards));
             renderCardsList();
         }
 
@@ -446,6 +466,7 @@
             document.getElementById('welcome-screen').classList.add('hidden');
             document.getElementById('game-over-screen').classList.add('hidden');
             document.getElementById('active-play-area').classList.remove('hidden');
+            document.getElementById('game-container').classList.add('in-game-cursor');
             document.getElementById('btn-return-menu').classList.remove('hidden');
             document.getElementById('btn-return-menu').classList.add('flex');
 
@@ -594,6 +615,7 @@
         function endGame() {
             currentGameState.isPlaying = false;
             document.getElementById('active-play-area').classList.add('hidden');
+            document.getElementById('game-container').classList.remove('in-game-cursor');
             document.getElementById('btn-return-menu').classList.add('hidden');
             document.getElementById('game-over-screen').classList.remove('hidden');
             document.getElementById('final-score-text').textContent = `Tu as obtenu ${currentGameState.score} sur ${currentGameState.activeQuestions.length} bonnes réponses !`;
@@ -603,6 +625,7 @@
             currentGameState.isPlaying = false;
             if ('speechSynthesis' in window) window.speechSynthesis.cancel();
             document.getElementById('active-play-area').classList.add('hidden');
+            document.getElementById('game-container').classList.remove('in-game-cursor');
             document.getElementById('game-over-screen').classList.add('hidden');
             document.getElementById('btn-return-menu').classList.add('hidden');
             document.getElementById('welcome-screen').classList.remove('hidden');
